@@ -27,7 +27,7 @@ COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE $PORT
-ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium"
-CMD [ "pnpm", "run", "start:production" ]
-CMD [ "pnpm", "run", "worker:production" ]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
