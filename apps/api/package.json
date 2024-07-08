@@ -111,5 +111,6 @@
       "*.json",
       "temp"
     ]
-  }
+  },
+  "packageManager": "pnpm@9.5.0"
 }
