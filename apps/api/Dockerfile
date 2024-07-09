@@ -20,8 +20,9 @@ RUN pnpm run build
 # Install packages needed for deployment
 FROM base
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y ca-certificates chromium chromium-sandbox && \
+    apt-get install --no-install-recommends -y chromium chromium-sandbox redis-tools && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN apt install -y ca-certificates
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app /app
 

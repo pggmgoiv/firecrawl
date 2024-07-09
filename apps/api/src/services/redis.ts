@@ -11,7 +11,9 @@ redis.on("error", (error) => {
     } else if (error.message === "ECONNREFUSED") {
       console.log("Connection to Redis Session Store refused!");
     } else console.log(error);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // Listen to 'reconnecting' event to Redis
@@ -20,14 +22,18 @@ redis.on("reconnecting", (err) => {
     if (redis.status === "reconnecting")
       console.log("Reconnecting to Redis Session Store...");
     else console.log("Error reconnecting to Redis Session Store.");
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // Listen to the 'connect' event to Redis
 redis.on("connect", (err) => {
   try {
     if (!err) console.log("Connected to Redis Session Store!");
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 /**
