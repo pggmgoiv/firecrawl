@@ -19,19 +19,16 @@ RUN pnpm run build
 
 # Install packages needed for deployment
 FROM base
-RUN apt-get update && \
-    apt-get upgrade && \
-    apt-get install --no-install-recommends -y chromium chromium-sandbox redis-tools ca-certificates
-# && \ rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-RUN apt update && \
-    apt upgrade && \
-    apt install -y redis-tools ca-certificates
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y chromium chromium-sandbox edis-server && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE $PORT
+ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium"
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
+
