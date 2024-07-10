@@ -20,7 +20,7 @@ RUN pnpm run build
 # Install packages needed for deployment
 FROM base
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y chromium chromium-sandbox edis-server && \
+    apt-get install --no-install-recommends -y chromium chromium-sandbox redis-server && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app /app
